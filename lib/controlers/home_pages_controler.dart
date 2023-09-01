@@ -18,5 +18,8 @@ get pages=>_pages;
     currentIndex=index;
     notifyListeners();
   }
-
+void goHome(){
+  currentIndex=0;
+   notifyListeners();
+}
 }

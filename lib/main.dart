@@ -28,8 +28,9 @@ LicenseRegistry.addLicense(()async*{
 });
   runApp(
       MultiProvider(providers:[
-        ChangeNotifierProvider(create: (_)=>TranslatorProvider()),
+       
     ChangeNotifierProvider(create: (_)=>ThemeChanger(isDarkMode: prefs.getBool("isDarkMode")?? false)),
+     ChangeNotifierProvider(create: (_)=>TranslatorProvider()),
     ChangeNotifierProvider(create: (_)=>HomePageControler()),
         ChangeNotifierProvider(create: (_)=>AdState(initFuture) ),
 

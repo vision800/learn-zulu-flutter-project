@@ -31,11 +31,18 @@ class HomePages extends StatefulWidget {
 }
 
 class _HomePagesState extends State<HomePages> {
+   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+     var translator=Provider.of<TranslatorProvider>(context);
+    translator.validate=false;
+    super.didChangeDependencies();
+  }
   @override
   void initState(){
+     
     super.initState();
-    var translator=Provider.of<TranslatorProvider>(context);
-    translator.validate=false;
+    
     Future((){
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();

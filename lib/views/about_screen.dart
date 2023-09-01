@@ -2,8 +2,8 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
-import '../controlers/trasnlator_provider_controler.dart';
+import 'package:learn_zulu/controlers/trasnlator_provider_controler.dart';
+import '../controlers/home_pages_controler.dart';
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
@@ -13,10 +13,16 @@ class AboutScreen extends StatefulWidget {
 
 class _AboutScreenState extends State<AboutScreen> {
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+     var translator=Provider.of<TranslatorProvider>(context);
+    translator.validate=false;
+    super.didChangeDependencies();
+  }
+  @override
   void initState(){
     super.initState();
-    var translator=Provider.of<TranslatorProvider>(context);
-    translator.validate=false;
+   
     Future((){
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -24,9 +30,15 @@ class _AboutScreenState extends State<AboutScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    String version="1.0.0";
+    String version="1.0.1";
     String email=" netshokotshokovision112@gmail.com";
-    return Scaffold(
+    var controler=Provider.of<HomePageControler>(context);
+    return WillPopScope(onWillPop: () async{ 
+      controler.goHome();
+      return false;
+ 
+     },
+    child:Scaffold(
       appBar: AppBar( title: const Text("About"),),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -44,7 +56,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         style: const TextStyle(color: Colors.purple,fontWeight: FontWeight.bold),
                       children: [
                         TextSpan(
-                          style:  Theme.of(context).textTheme.bodyText2,
+                          style:  Theme.of(context).textTheme.bodyMedium,
                             text:"is the application that offers Isizulu basics amd the main features of this application are the translator"
                             " that translate any words from english to zulu and also translate zulu words to english words with the use of internet connection and the last feature is the audio player that plays the audio for each corresponding zulu words."
 
@@ -67,8 +79,8 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   const Divider(thickness: 3.0,),
                   const SizedBox(height: 5.0,),
-                  Row(
-                    children: const [
+                  const Row(
+                    children: [
                       Text("Contact me",style: TextStyle(fontWeight: FontWeight.bold)),
                     ],
                   ),
@@ -90,8 +102,8 @@ class _AboutScreenState extends State<AboutScreen> {
 
             const SizedBox(height: 3.0,),
             const Divider(thickness: 2.0,),
-                Row(
-                  children: const [
+                const Row(
+                  children: [
                     Text("Consent",style: TextStyle(fontWeight: FontWeight.bold)),
                   ],
                 ),
@@ -116,6 +128,6 @@ class _AboutScreenState extends State<AboutScreen> {
     ]
         ),
          ),
-    );
+    ));
   }
 }

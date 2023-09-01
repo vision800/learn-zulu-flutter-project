@@ -12,6 +12,7 @@ import 'package:learn_zulu/services/database.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:provider/provider.dart';
 
+import '../controlers/home_pages_controler.dart';
 import '../controlers/mobile_ads_controler.dart';
 class TranslatorScreen extends StatefulWidget {
    const TranslatorScreen({Key? key}) : super(key: key);
@@ -42,8 +43,16 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
   Widget build(BuildContext context) {
 var translator=Provider.of<TranslatorProvider>(context, listen: true);
 var provider=Provider.of<ThemeChanger>(context);
+var controler=Provider.of<HomePageControler>(context);
 final adState=Provider.of<AdState>(context,listen:false);
-    return DefaultTabController(
+
+ 
+    return WillPopScope(onWillPop: () async{ 
+      controler.goHome();
+      return false;
+ 
+     },
+    child: DefaultTabController(
       length: 2,
       child: Scaffold(
 
@@ -92,9 +101,9 @@ final adState=Provider.of<AdState>(context,listen:false);
 
 
                                         ),
-                                        Expanded(
+                                        const Expanded(
                                           child: Column(
-                                            children: const[
+                                            children: [
                                               Icon(Icons.arrow_forward,size: 20.0,),
                                               Icon(Icons.arrow_back,size: 20.0,),
                                             ],
@@ -139,6 +148,7 @@ final adState=Provider.of<AdState>(context,listen:false);
 
                                         child:   Center(child: TextButton(child: const Text("Translate",style: TextStyle(color: Colors.white),),onPressed: (){
                                           Provider.of<TranslatorProvider>(context, listen: false).translate();
+                                          Provider.of<TranslatorProvider>(context, listen: false).showStatus(context);
                                           FocusScopeNode currentFocus=FocusScope.of(context);
                                           if(!currentFocus.hasPrimaryFocus){
                                             currentFocus.unfocus();
@@ -292,6 +302,6 @@ final adState=Provider.of<AdState>(context,listen:false);
             ],
           )
       ),
-    );
+    ));
   }
 }

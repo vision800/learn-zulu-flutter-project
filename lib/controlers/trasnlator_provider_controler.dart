@@ -107,5 +107,14 @@ else{
     _words =   SqliteDbProvider.db.getWords();
     notifyListeners();
   }
-
+void showStatus(BuildContext  context){
+ 
+       if(_englishWord.isEmpty){
+        const snackBar=  SnackBar(backgroundColor:Colors.purple,
+          content:  Text("Wait a Second...."),duration:Duration(seconds:3));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+   
+   notifyListeners();
+}
 }
